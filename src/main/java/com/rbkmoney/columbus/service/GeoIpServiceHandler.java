@@ -42,8 +42,9 @@ public class GeoIpServiceHandler implements GeoIpServiceSrv.Iface {
         try {
             cityResponse = service.getLocationByIp(IpAddresUtils.convert(ip));
             json = mapper.writeValueAsString(cityResponse);
+            log.info("Resolved IP address location found in maxmind db.", ip);
         } catch (AddressNotFoundException e) {
-            log.warn("IP address {} not found in maxmind db.");
+            log.warn("IP address {} not found in maxmind db.", ip);
         } catch (JsonProcessingException e) {
             logAndThrow("CityResponse cannot be converted to JSON.", e);
         } catch (IOException | GeoIp2Exception e) {
